@@ -13,6 +13,6 @@ public class User {
 
     private final String host;
     private final String username;
-    private User talkingWith;
+    private User talkingTo;
 
 }

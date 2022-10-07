@@ -34,4 +34,8 @@ public class ChatServer {
                 .filter(u -> u.getHost().equals(host))
                 .findAny();
     }
+
+    public void changeTalkingTo(User changedUser, User nowTalksTo){
+        changedUser.setTalkingTo(nowTalksTo);
+    }
 }
