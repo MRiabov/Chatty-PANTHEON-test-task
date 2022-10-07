@@ -40,7 +40,7 @@ class RestControllerTest {
     @Test
     void testDeleteUser() throws Exception {
         // Arrange
-        when(chatServer.quit((String) any())).thenReturn(true);
+        when(chatServer.quit(any())).thenReturn(true);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/quit").param("username", "foo");
 
         // Act and Assert
@@ -95,8 +95,8 @@ class RestControllerTest {
     @Test
     void testSendMessage() throws Exception {
         // Arrange
-        when(senderService.sendMessage((User) any(), (User) any(), (String) any())).thenReturn(true);
-        when(chatServer.getByHost((String) any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
+        when(senderService.sendMessage(any(), any(), any())).thenReturn(true);
+        when(chatServer.getByHost(any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/sendMessage")
                 .param("text", "foo")
                 .header("Host", "www.example.com:8080");
@@ -114,8 +114,8 @@ class RestControllerTest {
     @Test
     void messageFailedToSend() throws Exception {
         // Arrange
-        when(senderService.sendMessage((User) any(), (User) any(), (String) any())).thenReturn(false);
-        when(chatServer.getByHost((String) any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
+        when(senderService.sendMessage(any(), any(), any())).thenReturn(false);
+        when(chatServer.getByHost(any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/sendMessage")
                 .param("text", "foo")
                 .header("Host", "www.example.com:8080");
@@ -135,8 +135,8 @@ class RestControllerTest {
     @Test
     void notRegisteredNoMessageSent() throws Exception {
         // Arrange
-        when(senderService.sendMessage((User) any(), (User) any(), (String) any())).thenReturn(true);
-        when(chatServer.getByHost((String) any())).thenReturn(Optional.empty());
+        when(senderService.sendMessage(any(), any(), any())).thenReturn(true);
+        when(chatServer.getByHost(any())).thenReturn(Optional.empty());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/sendMessage")
                 .param("text", "foo")
                 .header("Host", "www.example.com:8080");
@@ -157,7 +157,7 @@ class RestControllerTest {
     @Test
     void noUserFoundReturnedError() throws Exception {
         // Arrange
-        when(chatServer.quit((String) any())).thenReturn(false);
+        when(chatServer.quit(any())).thenReturn(false);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/quit").param("username", "foo");
 
         // Act
@@ -176,7 +176,7 @@ class RestControllerTest {
     @Test
     void testRegisterUser() throws Exception {
         // Arrange
-        doNothing().when(chatServer).register((User) any());
+        doNothing().when(chatServer).register(any());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/register")
                 .param("username", "foo")
                 .header("Host", "www.example.com:8080");
@@ -198,9 +198,9 @@ class RestControllerTest {
     @Test
     void testTalkTo() throws Exception {
         // Arrange
-        when(chatServer.changeTalkingTo((User) any(), (User) any())).thenReturn(true);
-        when(chatServer.getByUsername((String) any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
-        when(chatServer.getByHost((String) any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
+        when(chatServer.changeTalkingTo(any(), any())).thenReturn(true);
+        when(chatServer.getByUsername(any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
+        when(chatServer.getByHost(any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/talkTo")
                 .param("recipientName", "foo")
                 .header("Host", "www.example.com:8080");
@@ -218,9 +218,9 @@ class RestControllerTest {
     @Test
     void cantAssignToYourself() throws Exception {
         // Arrange
-        when(chatServer.changeTalkingTo((User) any(), (User) any())).thenReturn(false);
-        when(chatServer.getByUsername((String) any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
-        when(chatServer.getByHost((String) any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
+        when(chatServer.changeTalkingTo(any(), any())).thenReturn(false);
+        when(chatServer.getByUsername(any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
+        when(chatServer.getByHost(any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/talkTo")
                 .param("recipientName", "foo")
                 .header("Host", "www.example.com:8080");
@@ -240,9 +240,9 @@ class RestControllerTest {
     @Test
     void noOtherUserNotReturned() throws Exception {
         // Arrange
-        when(chatServer.changeTalkingTo((User) any(), (User) any())).thenReturn(true);
-        when(chatServer.getByUsername((String) any())).thenReturn(Optional.empty());
-        when(chatServer.getByHost((String) any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
+        when(chatServer.changeTalkingTo(any(), any())).thenReturn(true);
+        when(chatServer.getByUsername(any())).thenReturn(Optional.empty());
+        when(chatServer.getByHost(any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/talkTo")
                 .param("recipientName", "foo")
                 .header("Host", "www.example.com:8080");
@@ -262,9 +262,9 @@ class RestControllerTest {
     @Test
     void notRegisteredNothingReturned() throws Exception {
         // Arrange
-        when(chatServer.changeTalkingTo((User) any(), (User) any())).thenReturn(true);
-        when(chatServer.getByUsername((String) any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
-        when(chatServer.getByHost((String) any())).thenReturn(Optional.empty());
+        when(chatServer.changeTalkingTo(any(), any())).thenReturn(true);
+        when(chatServer.getByUsername(any())).thenReturn(Optional.of(new User("localhost", "janedoe")));
+        when(chatServer.getByHost(any())).thenReturn(Optional.empty());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/talkTo")
                 .param("recipientName", "foo")
                 .header("Host", "www.example.com:8080");
