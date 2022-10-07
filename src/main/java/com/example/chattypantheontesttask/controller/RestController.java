@@ -47,7 +47,7 @@ public class RestController {
 
     @PostMapping("/sendMessage")
     public ResponseEntity<String> sendMessage(@RequestParam String text,@RequestParam String sentTo,@RequestHeader("Host") String host) {
-        Optional<User> sender = chatServer.getByUsername(host);
+        Optional<User> sender = chatServer.getByHost(host);
         if (sender.isEmpty()) return ResponseEntity.badRequest().body("Please register first.");
         Optional<User> receiver = chatServer.getByUsername(sentTo);
         if (receiver.isEmpty()) return ResponseEntity.notFound().build();

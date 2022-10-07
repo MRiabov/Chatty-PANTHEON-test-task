@@ -13,7 +13,7 @@ public class SenderService {
     public boolean sendMessage(User sentBy, User sentTo, String messageText){
         Message message = new Message(messageText,sentTo,sentBy);
         ResponseEntity<Message> sentMessage = new RestTemplate().
-                postForEntity(sentTo.getHost(), message, Message.class);
+                postForEntity("http://"+sentTo.getHost()+"/recieveMessage", message, Message.class);
         return (sentMessage.getStatusCode()==HttpStatus.OK);
     }
 
