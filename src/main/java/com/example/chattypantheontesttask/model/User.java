@@ -11,7 +11,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class User {
 
-    private final int port;
+    private final String host;
     private final String username;
     private User talkingWith;
 

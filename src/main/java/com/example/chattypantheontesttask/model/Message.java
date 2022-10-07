@@ -10,5 +10,6 @@ public class Message {
     @NonNull
     private final String text;
     private final User sentTo;
+    private final User sentFrom;
 
 }
