@@ -35,7 +35,9 @@ public class ChatServer {
                 .findAny();
     }
 
-    public void changeTalkingTo(User changedUser, User nowTalksTo){
+    public boolean changeTalkingTo(User changedUser, User nowTalksTo){
+        if (changedUser.getUsername().equals(nowTalksTo.getUsername())) return false;
         changedUser.setTalkingTo(nowTalksTo);
+        return true;
     }
 }

@@ -50,10 +50,9 @@ public class RestController {
         Optional<User> sender = chatServer.getByHost(host);
         if (sender.isEmpty()) return ResponseEntity.badRequest().body("Please register first.");
         User receiver = sender.get().getTalkingTo();
-        HttpStatus status = senderService.sendMessage(sender.get(), receiver, text) ?
-                HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR;
+        boolean successfullySent = senderService.sendMessage(sender.get(), receiver, text);
         return ResponseEntity
-                .status(status)
+                .status(successfullySent? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
     }
 
@@ -63,9 +62,9 @@ public class RestController {
         if (sender.isEmpty()) return ResponseEntity.badRequest().body("Please register first.");
         Optional<User> receiver = chatServer.getByUsername(recipientName);
         if (receiver.isEmpty()) return ResponseEntity.notFound().build();
-        chatServer.changeTalkingTo(sender.get(), receiver.get());
+        boolean successfullyChanged = chatServer.changeTalkingTo(sender.get(), receiver.get());
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(successfullyChanged?HttpStatus.OK:HttpStatus.BAD_REQUEST)
                 .build();
     }
 
