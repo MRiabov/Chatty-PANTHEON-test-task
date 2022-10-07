@@ -11,7 +11,9 @@ import org.springframework.web.client.RestTemplate;
 public class SenderService {
 
     public boolean sendMessage(User sentBy, User sentTo, String messageText){
-        Message message = new Message(messageText,sentTo,sentBy);
+        Message message = new Message(messageText,sentBy);
+        new RestTemplate().put("http://"+sentTo.getHost()+"/recieveMessage",null,
+                sentBy.getUsername(),messageText);
         ResponseEntity<Message> sentMessage = new RestTemplate().
                 postForEntity("http://"+sentTo.getHost()+"/recieveMessage", message, Message.class);
         return (sentMessage.getStatusCode()==HttpStatus.OK);

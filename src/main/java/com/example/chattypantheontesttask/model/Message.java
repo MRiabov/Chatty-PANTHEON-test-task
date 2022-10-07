@@ -10,6 +10,11 @@ public class Message {
     @NonNull
     private final String text;
     private final User sentTo;
-    private final User sentFrom;
+    private final User sentBy;
 
+    public Message(@NonNull String text, User sentBy) {
+        this.text = text;
+        this.sentBy = new User(null, sentBy.getUsername());
+        this.sentTo=null;
+    }
 }
